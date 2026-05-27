@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { PlusCircle, List, Phone, Trash2, CalendarPlus, Pencil, X, Check, Calendar } from 'lucide-react';
+import { PlusCircle, List, Phone, Trash2, CalendarPlus, Pencil, X, Check } from 'lucide-react';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -104,7 +104,7 @@ const inputCls =
   'w-full rounded-xl border border-iron-200 bg-white px-4 py-2 text-base font-medium text-iron-900 ' +
   'placeholder:text-iron-400 placeholder:font-normal focus:outline-none focus:ring-2 focus:ring-brand-500 ' +
   'focus:border-transparent transition-all duration-150';
-const labelCls = 'block text-sm font-semibold text-iron-800 mb-1';
+const labelCls = 'block text-base font-semibold text-iron-800 mb-1';
 
 const Chevron = () => (
   <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-iron-400">
@@ -114,7 +114,6 @@ const Chevron = () => (
   </div>
 );
 
-// Date input with calendar icon overlay
 const DateInput = ({
   value, onChange, className,
 }: {
@@ -122,17 +121,12 @@ const DateInput = ({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
 }) => (
-  <div className="relative">
-    <input
-      type="date"
-      value={value}
-      onChange={onChange}
-      className={`${className ?? inputCls} pr-10`}
-    />
-    <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-iron-400">
-      <Calendar size={16} />
-    </div>
-  </div>
+  <input
+    type="date"
+    value={value}
+    onChange={onChange}
+    className={className ?? inputCls}
+  />
 );
 
 // Quick callback week buttons
@@ -511,7 +505,7 @@ export default function App() {
                           <DateInput
                             value={editDraft.callBackDate}
                             onChange={e => { setEditDraft({ ...editDraft, callBackDate: e.target.value }); setEditQuickWeeks(null); }}
-                            className={`${inputCls} py-2.5 text-sm pr-10`}
+                            className={`${inputCls} py-2.5 text-sm`}
                           />
                           {editDraft.callBackDate && (
                             <p className="mt-1 text-xs text-iron-600">
@@ -545,12 +539,12 @@ export default function App() {
                     <>
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
-                          <p className="text-base font-semibold text-iron-900 leading-tight truncate">{lead.name}</p>
+                          <p className="text-lg font-semibold text-iron-900 leading-tight truncate">{lead.name}</p>
                           <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                            <span className="inline-block rounded-full bg-brand-100 border border-brand-200 px-2.5 py-0.5 text-xs font-medium text-brand-800">
+                            <span className="inline-block rounded-full bg-brand-100 border border-brand-200 px-2.5 py-0.5 text-sm font-medium text-brand-800">
                               {lead.bedrooms}BR · {lead.city}
                             </span>
-                            <span className="text-xs text-iron-500">{timeAgo(lead.createdAt)}</span>
+                            <span className="text-sm text-iron-500">{timeAgo(lead.createdAt)}</span>
                           </div>
                         </div>
                         <div className="flex items-center gap-1 shrink-0">
@@ -583,13 +577,13 @@ export default function App() {
                       </div>
 
                       <a href={`tel:${lead.phone.replace(/\D/g, '')}`}
-                        className="mt-3 flex items-center gap-2 text-brand-700 font-medium text-sm">
+                        className="mt-3 flex items-center gap-2 text-brand-700 font-medium text-base">
                         <Phone size={14} />
                         {lead.phone}
                       </a>
 
                       {lead.notes && (
-                        <p className="mt-2 text-sm text-iron-600 leading-relaxed">{lead.notes}</p>
+                        <p className="mt-2 text-base text-iron-600 leading-relaxed">{lead.notes}</p>
                       )}
 
                       {lead.callBackDate && (
@@ -630,7 +624,7 @@ export default function App() {
           <button
             onClick={() => switchTab('add')}
             className={[
-              'flex-1 flex flex-col items-center justify-center gap-1 text-xs font-medium transition-colors duration-150',
+              'flex-1 flex flex-col items-center justify-center gap-1 text-sm font-medium transition-colors duration-150',
               tab === 'add' ? 'text-brand-500' : 'text-iron-400',
             ].join(' ')}
           >
@@ -640,7 +634,7 @@ export default function App() {
           <button
             onClick={() => switchTab('list')}
             className={[
-              'flex-1 flex flex-col items-center justify-center gap-1 text-xs font-medium transition-colors duration-150',
+              'flex-1 flex flex-col items-center justify-center gap-1 text-sm font-medium transition-colors duration-150',
               tab === 'list' ? 'text-brand-500' : 'text-iron-400',
             ].join(' ')}
           >

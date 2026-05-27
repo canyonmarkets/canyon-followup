@@ -45,3 +45,12 @@ body {
   color: #111827;
   overflow: hidden;
 }
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field,
+input[type="date"]::-webkit-datetime-edit-text {
+  color: #374151;
+  font-weight: 600;
+}
