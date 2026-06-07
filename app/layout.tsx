@@ -12,13 +12,21 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Canyon Apts — Follow-Ups',
-  description: 'Canyon Apartments follow-up list',
+  title: 'Canyon Follow-Up',
+  description: 'Canyon Apartments follow-up tracker',
   robots: { index: false, follow: false },
+  manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
-    title: 'Canyon Apts',
+    title: 'Follow-Up',
     statusBarStyle: 'black-translucent',
+  },
+  icons: {
+    icon: [
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
 };
 
@@ -27,6 +35,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="font-sans">
         {children}
+        <script dangerouslySetInnerHTML={{ __html: `
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+          }
+        ` }} />
       </body>
     </html>
   );
