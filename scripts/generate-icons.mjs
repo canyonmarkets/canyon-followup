@@ -19,68 +19,29 @@ function drawIcon(size) {
   ctx.fill();
 
   const orange = '#E8571A';
-  const lw = size * 0.06;
+
+  // Strategy: draw a classic handset using a thick stroke path
+  // The handset is basically a rotated "C" shape with the opening facing right
+  // Earpiece = top circle, mouthpiece = bottom circle, curved body connects them
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(Math.PI * 0.22); // tilt ~40° — earpiece top-left, mouthpiece bottom-right
+
+  const r = size * 0.30; // radius of the main arc (the curve of the handset body)
+  const lw = size * 0.13; // stroke width (thick, like the reference)
 
   ctx.strokeStyle = orange;
   ctx.lineWidth = lw;
   ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
 
-  // Draw a classic phone handset using a filled path
-  // The handset has two round ends (earpiece top-left, mouthpiece bottom-right)
-  // connected by a curved body — rotated ~45 degrees
-
-  const s = size * 0.62; // overall scale
-  const ox = cx - s * 0.08; // offset center slightly
-  const oy = cy + s * 0.08;
-
-  // We'll draw using a rotated coordinate approach
-  // Earpiece center (top-left area)
-  const ex = cx - s * 0.22;
-  const ey = cy - s * 0.28;
-  const er = s * 0.16; // earpiece radius
-
-  // Mouthpiece center (bottom-right area)
-  const mx = cx + s * 0.22;
-  const my = cy + s * 0.28;
-  const mr = s * 0.16; // mouthpiece radius
-
-  // Draw earpiece circle (filled)
+  // Main handset body: an arc that goes from top to bottom
+  // sweeping about 200 degrees (like a C rotated on its side)
   ctx.beginPath();
-  ctx.arc(ex, ey, er, 0, Math.PI * 2);
-  ctx.fillStyle = orange;
-  ctx.fill();
-
-  // Draw mouthpiece circle (filled)
-  ctx.beginPath();
-  ctx.arc(mx, my, mr, 0, Math.PI * 2);
-  ctx.fillStyle = orange;
-  ctx.fill();
-
-  // Draw the connecting body as a thick curved stroke
-  // The body curves from earpiece to mouthpiece with a slight S-curve
-  ctx.strokeStyle = orange;
-  ctx.lineWidth = er * 1.1;
-  ctx.lineCap = 'round';
-
-  ctx.beginPath();
-  ctx.moveTo(ex + er * 0.5, ey + er * 0.5);
-  ctx.bezierCurveTo(
-    ex + s * 0.25, ey + s * 0.15,  // control 1
-    mx - s * 0.25, my - s * 0.15,  // control 2
-    mx - mr * 0.5, my - mr * 0.5   // end
-  );
+  ctx.arc(r * 0.35, 0, r, Math.PI * 0.85, Math.PI * 2.15, false);
   ctx.stroke();
 
-  // Punch out center of earpiece and mouthpiece to make them look like cups
-  ctx.fillStyle = '#111111';
-  ctx.beginPath();
-  ctx.arc(ex, ey, er * 0.45, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.beginPath();
-  ctx.arc(mx, my, mr * 0.45, 0, Math.PI * 2);
-  ctx.fill();
+  ctx.restore();
 
   return canvas.toBuffer('image/png');
 }
