@@ -9,39 +9,18 @@ function drawIcon(size) {
   const canvas = createCanvas(size, size);
   const ctx = canvas.getContext('2d');
 
-  const cx = size / 2;
-  const cy = size / 2;
-
   // Dark background
   ctx.fillStyle = '#111111';
   ctx.beginPath();
   ctx.roundRect(0, 0, size, size, size * 0.22);
   ctx.fill();
 
-  const orange = '#E8571A';
-
-  // Strategy: draw a classic handset using a thick stroke path
-  // The handset is basically a rotated "C" shape with the opening facing right
-  // Earpiece = top circle, mouthpiece = bottom circle, curved body connects them
-
-  ctx.save();
-  ctx.translate(cx, cy);
-  ctx.rotate(Math.PI * 0.22); // tilt ~40° — earpiece top-left, mouthpiece bottom-right
-
-  const r = size * 0.30; // radius of the main arc (the curve of the handset body)
-  const lw = size * 0.13; // stroke width (thick, like the reference)
-
-  ctx.strokeStyle = orange;
-  ctx.lineWidth = lw;
-  ctx.lineCap = 'round';
-
-  // Main handset body: an arc that goes from top to bottom
-  // sweeping about 200 degrees (like a C rotated on its side)
-  ctx.beginPath();
-  ctx.arc(r * 0.35, 0, r, Math.PI * 0.85, Math.PI * 2.15, false);
-  ctx.stroke();
-
-  ctx.restore();
+  // Big bold "JO" in orange
+  ctx.fillStyle = '#E8571A';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = `bold ${size * 0.48}px Arial`;
+  ctx.fillText('JO', size / 2, size / 2);
 
   return canvas.toBuffer('image/png');
 }
